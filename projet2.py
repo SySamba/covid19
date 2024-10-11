@@ -45,28 +45,29 @@ total_confirmed = confirmed_country['Count'].sum()
 total_deaths = deaths_country['Count'].sum()
 total_recovered = recovered_country['Count'].sum()
 
-# Affichage des totaux dans des cartes stylisées
+# Affichage des totaux dans des cartes stylisées avec icônes
 st.markdown("<h2 style='text-align: center;'>Statistiques COVID-19</h2>", unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns(3)
 
 with col1:
     st.markdown(f"<div style='background-color: #f9f9f9; border-radius: 10px; padding: 20px; text-align: center;'>"
-                 f"<h3 style='color: #007bff;'>Cas Confirmés</h3>"
+                 f"<h3 style='color: #007bff;'>🦠 Cas Confirmés</h3>"
                  f"<h2 style='color: #007bff;'>{total_confirmed}</h2>"
                  f"</div>", unsafe_allow_html=True)
 
 with col2:
     st.markdown(f"<div style='background-color: #f9f9f9; border-radius: 10px; padding: 20px; text-align: center;'>"
-                 f"<h3 style='color: #dc3545;'>Décès</h3>"
+                 f"<h3 style='color: #dc3545;'>☠️ Décès</h3>"
                  f"<h2 style='color: #dc3545;'>{total_deaths}</h2>"
                  f"</div>", unsafe_allow_html=True)
 
 with col3:
     st.markdown(f"<div style='background-color: #d4edda; border-radius: 10px; padding: 20px; text-align: center;'>"
-                 f"<h3 style='color: #28a745;'>Guérisons</h3>"
+                 f"<h3 style='color: #28a745;'>💊 Guérisons</h3>"
                  f"<h2 style='color: #28a745;'>{total_recovered}</h2>"
                  f"</div>", unsafe_allow_html=True)
+
 
 # Section 2 : Répartition Mondiale des Cas, Décès et Guérisons
 st.header("2. Répartition Mondiale des Cas, Décès et Guérisons")
@@ -234,18 +235,18 @@ col12, col13, col14 = st.columns(3)
 
 with col12:
     st.markdown(f"<div style='background-color: #f9f9f9; border-radius: 10px; padding: 20px; text-align: center;'>"
-                 f"<h3 style='color: #007bff;'>Total Cas Confirmés</h3>"
+                 f"<h3 style='color: #007bff;'>🦠Total Cas Confirmés</h3>"
                  f"<h2 style='color: #007bff;'>{total_confirmed}</h2>"
                  f"</div>", unsafe_allow_html=True)
 
 with col13:
-    st.markdown(f"<div style='background-color: #dc3545; border-radius: 10px; padding: 20px; text-align: center;'>"
-                 f"<h3 style='color: #fff;'>Total Décès</h3>"
-                 f"<h2 style='color: #fff;'>{total_deaths}</h2>"
+    st.markdown(f"<div style='background-color: #f9f9f9; border-radius: 10px; padding: 20px; text-align: center;'>"
+                 f"<h3 style='color: #dc3545'>☠️Total Décès</h3>"
+                 f"<h2 style='color: #dc3545'>{total_deaths}</h2>"
                  f"</div>", unsafe_allow_html=True)
 
 with col14:
-    st.markdown(f"<div style='background-color: #28a745; border-radius: 10px; padding: 20px; text-align: center;'>"
-                 f"<h3 style='color: #fff;'>Total Guérisons</h3>"
-                 f"<h2 style='color: #fff;'>{total_recovered}</h2>"
+    st.markdown(f"<div style='background-color: #d4edda; border-radius: 10px; padding: 20px; text-align: center;'>"
+                 f"<h3 style='color: #28a745;'>💊Total Guérisons</h3>"
+                 f"<h2 style='color: #28a745;'>{total_recovered}</h2>"
                  f"</div>", unsafe_allow_html=True)
