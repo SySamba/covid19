@@ -68,6 +68,29 @@ with col3:
                  f"<h2 style='color: #28a745;'>{total_recovered}</h2>"
                  f"</div>", unsafe_allow_html=True)
 
+# Section 4 : Évolution des Cas pour le pays sélectionné
+st.header(f"4. Évolution des Cas pour {country}")
+
+# Graphique pour l'évolution des cas confirmés du pays sélectionné
+fig_country_confirmed = px.line(confirmed_country, x='Date', y='Count', 
+                                 title=f'Évolution des Cas Confirmés - {country}',
+                                 labels={'Count': 'Nombre de Cas Confirmés', 'Date': 'Date'},
+                                 template='plotly_white')
+st.plotly_chart(fig_country_confirmed)
+
+# Graphique pour l'évolution des décès du pays sélectionné
+fig_country_deaths = px.line(deaths_country, x='Date', y='Count', 
+                              title=f'Évolution des Décès - {country}',
+                              labels={'Count': 'Nombre de Décès', 'Date': 'Date'},
+                              template='plotly_white')
+st.plotly_chart(fig_country_deaths)
+
+# Graphique pour l'évolution des guérisons du pays sélectionné
+fig_country_recovered = px.line(recovered_country, x='Date', y='Count', 
+                                 title=f'Évolution des Guérisons - {country}',
+                                 labels={'Count': 'Nombre de Guérisons', 'Date': 'Date'},
+                                 template='plotly_white')
+st.plotly_chart(fig_country_recovered)
 
 # Section 2 : Répartition Mondiale des Cas, Décès et Guérisons
 st.header("2. Répartition Mondiale des Cas, Décès et Guérisons")
@@ -77,30 +100,21 @@ fig_world_cases = px.choropleth(confirmed_df.groupby('Country/Region').agg({'Cou
                                 locations='Country/Region', locationmode='country names', 
                                 color='Count', title='🌍 Cas Confirmés par Pays', 
                                 color_continuous_scale=px.colors.sequential.Plasma)
+st.plotly_chart(fig_world_cases)
 
 # Répartition mondiale des décès
 fig_world_deaths = px.choropleth(deaths_df.groupby('Country/Region').agg({'Count':'sum'}).reset_index(),
                                  locations='Country/Region', locationmode='country names', 
                                  color='Count', title='🌍 Décès par Pays', 
                                  color_continuous_scale=px.colors.sequential.Reds)
+st.plotly_chart(fig_world_deaths)
 
 # Répartition mondiale des guérisons
 fig_world_recovered = px.choropleth(recovered_df.groupby('Country/Region').agg({'Count':'sum'}).reset_index(),
                                     locations='Country/Region', locationmode='country names', 
                                     color='Count', title='🌍 Guérisons par Pays', 
                                     color_continuous_scale=px.colors.sequential.Greens)
-
-# Affichage des cartes dans des colonnes
-col4, col5, col6 = st.columns(3)
-
-with col4:
-    st.plotly_chart(fig_world_cases)
-
-with col5:
-    st.plotly_chart(fig_world_deaths)
-
-with col6:
-    st.plotly_chart(fig_world_recovered)
+st.plotly_chart(fig_world_recovered)
 
 # Section 3 : Comparaison Temporelle entre Pays
 st.header("3. Comparaison Temporelle des Pays")
@@ -137,6 +151,7 @@ fig_temp_confirmed.update_layout(title="📈 Évolution des Cas Confirmés dans 
                                   xaxis_title='Date',
                                   yaxis_title='Nombre de Cas Confirmés',
                                   template='plotly_white')
+st.plotly_chart(fig_temp_confirmed)
 
 # Graphique comparatif des décès
 fig_temp_deaths = go.Figure()
@@ -154,6 +169,7 @@ fig_temp_deaths.update_layout(title="⚰️ Évolution des Décès dans le Temps
                               xaxis_title='Date',
                               yaxis_title='Nombre de Décès',
                               template='plotly_white')
+st.plotly_chart(fig_temp_deaths)
 
 # Graphique comparatif des guérisons
 fig_temp_recovered = go.Figure()
@@ -167,22 +183,13 @@ for country in selected_countries:
                                             line=dict(color=country_colors[country], width=2),
                                             marker=dict(size=6)))
 
-fig_temp_recovered.update_layout(title="💚 Évolution des Guérisons dans le Temps",
-                                 xaxis_title='Date',
-                                 yaxis_title='Nombre de Guérisons',
-                                 template='plotly_white')
+fig_temp_recovered.update_layout(title="💊 Évolution des Guérisons dans le Temps",
+                                  xaxis_title='Date',
+                                  yaxis_title='Nombre de Guérisons',
+                                  template='plotly_white')
+st.plotly_chart(fig_temp_recovered)
 
-# Affichage des graphiques comparatifs
-col7, col8, col9 = st.columns(3)
 
-with col7:
-    st.plotly_chart(fig_temp_confirmed)
-
-with col8:
-    st.plotly_chart(fig_temp_deaths)
-
-with col9:
-    st.plotly_chart(fig_temp_recovered)
 
 # Section 4 : Taux d'Infection et de Mortalité
 st.header("4. Taux d'Infection et de Mortalité")
@@ -250,3 +257,11 @@ with col14:
                  f"<h3 style='color: #28a745;'>💊Total Guérisons</h3>"
                  f"<h2 style='color: #28a745;'>{total_recovered}</h2>"
                  f"</div>", unsafe_allow_html=True)
+
+
+
+# Ajout d'un pied de page
+st.markdown("<hr>", unsafe_allow_html=True)
+st.markdown("<footer style='text-align: center; color: #777;'>"
+             "Données COVID-19 fournies par Johns Hopkins University<br>"
+             "Créé avec ❤️ par Votre Nom</footer>", unsafe_allow_html=True)
