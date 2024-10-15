@@ -29,7 +29,61 @@ st.title("📊 Tableau de Bord COVID-19")
 st.markdown("<h1 style='text-align: center; color: #007bff;'>Analyse de la Pandémie COVID-19</h1>", unsafe_allow_html=True)
 st.markdown("<hr>", unsafe_allow_html=True)
 
-# Section 1 : Sélection d'un pays pour afficher les cas de guérison et de décès
+# Section : Affichage des Données Brutes avec filtres
+st.header("Affichage des Données Brutes")
+
+# Option pour sélectionner le jeu de données à afficher
+dataset_choice = st.selectbox("Sélectionnez le jeu de données à afficher", 
+                              ["Cas Confirmés", "Décès", "Guérisons"])
+
+# Sélection du jeu de données en fonction du choix
+if dataset_choice == "Cas Confirmés":
+    df_to_display = confirmed_df
+elif dataset_choice == "Décès":
+    df_to_display = deaths_df
+else:
+    df_to_display = recovered_df
+
+# Options pour sélectionner les colonnes à afficher
+st.markdown("#### Sélectionnez les colonnes à afficher")
+columns = st.multiselect("", df_to_display.columns.tolist(), default=df_to_display.columns.tolist())
+
+# Option pour sélectionner le nombre de lignes à afficher
+st.markdown("#### Sélectionnez le nombre de lignes à afficher")
+rows = st.slider('', min_value=5, max_value=len(df_to_display), value=10)
+
+# Options de filtrage
+st.markdown("#### Filtrer les données par Pays")
+countries = df_to_display['Country/Region'].unique().tolist()
+selected_countries = st.multiselect("", options=countries, default=[])
+
+# Filtrage par date
+st.markdown("#### Filtrer les données par Date")
+date_range = st.date_input("Sélectionnez une plage de dates", 
+                           [df_to_display['Date'].min(), df_to_display['Date'].max()])
+
+# Filtrer les données en fonction des pays et de la plage de dates sélectionnés
+filterData = df_to_display
+
+if selected_countries:
+    filterData = filterData[filterData['Country/Region'].isin(selected_countries)]
+
+if len(date_range) == 2:
+    start_date, end_date = date_range
+    filterData = filterData[(filterData['Date'] >= pd.to_datetime(start_date)) & (filterData['Date'] <= pd.to_datetime(end_date))]
+
+# Affichage des données filtrées
+if columns:
+    with st.expander("Aperçu des données filtrées"):
+        st.dataframe(filterData[columns].head(rows).style.set_table_styles(
+            [{'selector': 'th', 'props': [('background-color', '#f2f2f2')]}]
+        ))
+else:
+    st.warning("Sélectionnez des colonnes pour afficher les données.")
+
+st.markdown("<hr>", unsafe_allow_html=True)
+
+# Section 1 : Informations sur un Pays Sélectionné
 st.header("1. Informations sur un Pays Sélectionné")
 
 # Sélection du pays à analyser
@@ -46,7 +100,7 @@ total_deaths = deaths_country['Count'].sum()
 total_recovered = recovered_country['Count'].sum()
 
 # Affichage des totaux dans des cartes stylisées avec icônes
-st.markdown("<h2 style='text-align: center;'>Statistiques COVID-19</h2>", unsafe_allow_html=True)
+st.markdown(f"<h2 style='text-align: center;'>Statistiques COVID-19 pour {country}</h2>", unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns(3)
 
@@ -188,7 +242,6 @@ fig_temp_recovered.update_layout(title="💊 Évolution des Guérisons dans le T
                                   yaxis_title='Nombre de Guérisons',
                                   template='plotly_white')
 st.plotly_chart(fig_temp_recovered)
-
 
 
 # Section 4 : Taux d'Infection et de Mortalité
