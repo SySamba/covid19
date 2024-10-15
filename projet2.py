@@ -21,7 +21,7 @@ confirmed_df = preprocess_data(confirmed_df)
 deaths_df = preprocess_data(deaths_df)
 recovered_df = preprocess_data(recovered_df)
 
-# Configuration de la page Streamlit
+# Configuration de la page Streamlit du projet
 st.set_page_config(page_title="Tableau de Bord COVID-19", layout="wide")
 st.title("📊 Tableau de Bord COVID-19")
 
