@@ -4,7 +4,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import random
 
-# Fonction de prétraitement pour uniformiser les fichiers CSV
+# Fonction de prétraitement pour uniformiser les fichiers CSv
 def preprocess_data(df):
     df = df.melt(id_vars=["Province/State", "Country/Region", "Lat", "Long"], 
                  var_name="Date", value_name="Count")
