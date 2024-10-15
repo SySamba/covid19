@@ -263,5 +263,5 @@ with col14:
 # Ajout d'un pied de page
 st.markdown("<hr>", unsafe_allow_html=True)
 st.markdown("<footer style='text-align: center; color: #777;'>"
-             "Données COVID-19 fournies par Johns Hopkins University<br>"
-             "Créé avec ❤️ par Votre Nom</footer>", unsafe_allow_html=True)
+             "Universite Cheikh Anta Diop de Dakar <br>"
+             "Créé avec ❤️ par Samba SY", unsafe_allow_html=True)
